@@ -7,6 +7,7 @@ import cors from "cors";
 import helmet from "helmet";
 
 import adminRoute from "./routes/admin";
+import userRoute from "./routes/user";
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/admin", adminRoute);
+app.use("/api/user", userRoute);
 
 const mongoUri = process.env.MONGO_URL;
 

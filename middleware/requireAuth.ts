@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
-import User from "../models/userModel";
+import User from "../models/adminModel";
 
 declare module "express-serve-static-core" {
   interface Request {
@@ -14,8 +14,6 @@ const requireAuth = async (
   next: NextFunction
 ): Promise<void> => {
   const { authorization } = req.headers;
-
-  console.log("DUMAAN SA MIDDLEWARE");
 
   if (!authorization) {
     res.status(401).json({ error: "Unauthorized access." });

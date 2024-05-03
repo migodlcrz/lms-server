@@ -1,4 +1,4 @@
-import User from "../models/userModel";
+import Admin from "../models/adminModel";
 import { Request, Response } from "express";
 import validator from "validator";
 import bcrypt from "bcrypt";
@@ -11,8 +11,9 @@ const createToken = (_id: string, email: string) => {
     expiresIn: "1h",
   });
 };
-export const getUsers = async (req: Request, res: Response) => {
-  const users = await User.find({}).sort({ createdAt: -1 });
+
+export const getAdmins = async (req: Request, res: Response) => {
+  const users = await Admin.find({}).sort({ createdAt: -1 });
 
   if (!users) {
     res.status(400).json({ error: "No users found" });
@@ -21,7 +22,7 @@ export const getUsers = async (req: Request, res: Response) => {
   res.status(200).json(users);
 };
 
-export const registerUser = async (req: Request, res: Response) => {
+export const registerAdmin = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
 
   if (!email || !password) {
@@ -42,7 +43,7 @@ export const registerUser = async (req: Request, res: Response) => {
     return;
   }
 
-  const exist = await User.findOne({ email });
+  const exist = await Admin.findOne({ email });
 
   if (exist) {
     res.status(400).json({ message: "Email already linked." });
@@ -53,7 +54,7 @@ export const registerUser = async (req: Request, res: Response) => {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    const user = await User.create({ name, email, password: hashedPassword });
+    const user = await Admin.create({ name, email, password: hashedPassword });
 
     const token = createToken(user._id, user.email);
 
@@ -65,7 +66,7 @@ export const registerUser = async (req: Request, res: Response) => {
   }
 };
 
-export const loginUser = async (req: Request, res: Response) => {
+export const loginAdmin = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -73,7 +74,7 @@ export const loginUser = async (req: Request, res: Response) => {
     return;
   }
 
-  const user = await User.findOne({ email });
+  const user = await Admin.findOne({ email });
 
   if (!user) {
     res.status(400).json({ error: "Email Invalid." });
@@ -98,14 +99,14 @@ export const loginUser = async (req: Request, res: Response) => {
   }
 };
 
-export const updateUser = async (req: Request, res: Response) => {
+export const updateAdmin = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "User does not exist." });
   }
 
-  const card = await User.findOneAndUpdate({ _id: id }, { ...req.body });
+  const card = await Admin.findOneAndUpdate({ _id: id }, { ...req.body });
 
   if (!card) {
     return res.status(404).json({ error: "User does not exist." });
@@ -114,14 +115,14 @@ export const updateUser = async (req: Request, res: Response) => {
   res.status(200).json(card);
 };
 
-export const deleteUser = async (req: Request, res: Response) => {
+export const deleteAdmin = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "Invalid id." });
   }
 
-  const card = await User.findOneAndDelete({ _id: id });
+  const card = await Admin.findOneAndDelete({ _id: id });
 
   if (!card) {
     return res.status(404).json({ error: "User does not exist." });

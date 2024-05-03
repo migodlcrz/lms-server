@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 import cors from "cors";
 import helmet from "helmet";
 
-import userRoute from "./routes/user";
+import adminRoute from "./routes/admin";
 
 const app = express();
 
@@ -19,7 +19,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api/user", userRoute);
+app.use("/api/admin", adminRoute);
 
 const mongoUri = process.env.MONGO_URL;
 

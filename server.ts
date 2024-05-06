@@ -8,6 +8,7 @@ import helmet from "helmet";
 
 import adminRoute from "./routes/admin";
 import userRoute from "./routes/user";
+import courseRoute from "./routes/course";
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
 
 app.use("/api/admin", adminRoute);
 app.use("/api/user", userRoute);
+app.use("/api/course", courseRoute);
 
 const mongoUri = process.env.MONGO_URL;
 

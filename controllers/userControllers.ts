@@ -24,5 +24,6 @@ export const deleteUser = async (req: Request, res: Response) => {
   if (!user) {
     res.status(400).json({ error: "User not found." });
   }
-  res.status(200).json({ messsage: "User deleted" });
+
+  res.status(200).json({ message: "User deleted" });
 };

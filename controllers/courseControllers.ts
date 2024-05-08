@@ -14,7 +14,7 @@ export const getCourses = async (req: Request, res: Response) => {
 
 export const createCourse = async (req: Request, res: Response) => {
   try {
-    const { courseID, courseName } = req.body;
+    const { courseID, courseName, modules, students } = req.body;
 
     const exist = await Course.findOne({ courseID });
 
@@ -26,11 +26,20 @@ export const createCourse = async (req: Request, res: Response) => {
       return res.status(400).json({ error: "Incomplete course details." });
     }
 
-    const course = await Course.create({ courseID, courseName });
+    const courseData = {
+      courseID,
+      courseName,
+      modules,
+      students,
+    };
 
-    return res.status(200).json({ message: "Course successfully created." });
+    const course = await Course.create(courseData);
+
+    return res
+      .status(200)
+      .json({ message: "Course successfully created.", course });
   } catch (error) {
-    return res.status(500).json({ error: error });
+    return res.status(500).json({ error: "Internal server error." });
   }
 };
 

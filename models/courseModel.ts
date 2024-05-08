@@ -1,9 +1,25 @@
-import mongoose, { Schema, Document, Model } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
+
+interface Topic {
+  name: string;
+  isComplete: boolean;
+}
+
+interface Quiz {
+  name: string;
+  isComplete: boolean;
+}
+
+interface Module {
+  topics: Topic[];
+  quiz: Quiz[];
+}
 
 interface Course extends Document {
-  courseId: string;
+  courseID: string;
   courseName: string;
-  students: any[];
+  modules: Module[];
+  students: { id: string }[];
 }
 
 const courseSchema = new mongoose.Schema(
@@ -16,9 +32,43 @@ const courseSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    modules: [
+      {
+        topics: [
+          {
+            name: {
+              type: String,
+              default: "Topic - 0! Welcome",
+              required: true,
+            },
+            isComplete: { type: Boolean, default: false, required: true },
+            dateCreated: {
+              type: Date,
+              default: Date.now,
+              required: true,
+            },
+          },
+        ],
+        quiz: [
+          {
+            name: {
+              type: String,
+              default: "Quiz - 0! Welcome",
+              required: true,
+            },
+            isComplete: { type: Boolean, default: false, required: true },
+            dateCreated: {
+              type: Date,
+              default: Date.now,
+              required: true,
+            },
+          },
+        ],
+      },
+    ],
     students: [
       {
-        id: String,
+        id: { type: String },
       },
     ],
   },

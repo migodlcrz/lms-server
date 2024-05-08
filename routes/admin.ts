@@ -6,6 +6,7 @@ import {
   deleteAdmin,
   getAdmins,
   updateAdmin,
+  googleLoginAdmin,
 } from "../controllers/adminControllers";
 
 const admin = express.Router();
@@ -15,6 +16,8 @@ admin.get("/", getAdmins);
 admin.post("/signup", registerAdmin);
 
 admin.post("/login", loginAdmin);
+
+admin.post("/login/google", googleLoginAdmin);
 
 admin.patch("/update/:id", updateAdmin);
 

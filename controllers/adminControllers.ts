@@ -66,6 +66,30 @@ export const registerAdmin = async (req: Request, res: Response) => {
   }
 };
 
+export const googleLoginAdmin = async (req: Request, res: Response) => {
+  const { name, email, token } = req.body;
+
+  try {
+    if (!email || !name || !token) {
+      res.status(400).json({ error: "Incomplete details." });
+      return;
+    }
+
+    const user = await Admin.findOne({ email });
+
+    if (!user) {
+      res.status(400).json({ error: "No admin found." });
+      return;
+    }
+
+    res
+      .status(200)
+      .json({ message: "Logged in.", name: name, email: email, token: token });
+  } catch (error) {
+    res.status(400).json({ error: "Server error." });
+  }
+};
+
 export const loginAdmin = async (req: Request, res: Response) => {
   const { email, password } = req.body;
 

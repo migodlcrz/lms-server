@@ -99,6 +99,36 @@ export const registerUser = async (req: Request, res: Response) => {
 
 export const googleRegisterUser = async (req: Request, res: Response) => {
   const { name, email, token } = req.body;
+
+  try {
+    if (!email || !name || !token) {
+      res.status(400).json({ error: "Incomplete details." });
+      return;
+    }
+
+    const exist = await User.findOne({ email });
+
+    if (exist) {
+      res.status(400).json({ error: "Account is already registered." });
+      return;
+    }
+
+    try {
+      // const saltRounds = 10;
+      // const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+      const user = await User.create({ name, email });
+
+      const token = createToken(user._id, user.email);
+
+      const user_ = user.email;
+      res.status(200).json({ message: "User created.", user_, email, token });
+    } catch (error) {
+      res.status(400).json({ message: "Server error." });
+    }
+  } catch (error) {
+    res.status(400).json({ error: "Server error." });
+  }
 };
 
 export const googleLoginUser = async (req: Request, res: Response) => {

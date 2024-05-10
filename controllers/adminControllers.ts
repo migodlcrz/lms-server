@@ -25,7 +25,7 @@ export const getAdmins = async (req: Request, res: Response) => {
 export const registerAdmin = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
 
-  if (!email || !password) {
+  if (!name || !email || !password) {
     res.status(400).json({ message: "All fields must be filled." });
     return;
   }
@@ -101,14 +101,14 @@ export const loginAdmin = async (req: Request, res: Response) => {
   const user = await Admin.findOne({ email });
 
   if (!user) {
-    res.status(400).json({ error: "Email Invalid." });
+    res.status(400).json({ error: "Invalid credentials." });
     return;
   }
 
   const match = await bcrypt.compare(password, user.password);
 
   if (!match) {
-    res.status(400).json({ error: "Incorrect password." });
+    res.status(400).json({ error: "Invalid credentials." });
     return;
   }
 

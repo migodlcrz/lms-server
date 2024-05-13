@@ -58,9 +58,12 @@ export const registerAdmin = async (req: Request, res: Response) => {
 
     const token = createToken(user._id, user.email);
 
+    const name_ = user.name;
     const user_ = user.email;
 
-    res.status(200).json({ message: "User created.", user_, email, token });
+    res
+      .status(200)
+      .json({ message: "User created.", name_, user_, email, token });
   } catch (error) {
     res.status(400).json({ message: "Server error." });
   }
@@ -114,10 +117,12 @@ export const loginAdmin = async (req: Request, res: Response) => {
 
   try {
     const token = createToken(user._id, user.email);
+
+    const name_ = user.name;
     const user_ = user.email;
-    const pass_ = user.password;
+
     // res.status(200).json({ user_, jwt: token });
-    res.status(200).json({ message: "Logged in.", user_, token: token });
+    res.status(200).json({ message: "Logged in.", name_, user_, token: token });
   } catch (error) {
     res.status(400).json({ error: "Server error." });
   }

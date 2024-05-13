@@ -13,7 +13,7 @@ const admin = express.Router();
 
 admin.get("/", getAdmins);
 
-admin.post("/signup", registerAdmin);
+admin.post("/register", registerAdmin);
 
 admin.post("/login", loginAdmin);
 

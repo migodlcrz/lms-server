@@ -9,6 +9,10 @@ interface Admin extends Document {
 
 const adminSchema: Schema = new Schema(
   {
+    name: {
+      type: String,
+      required: true,
+    },
     email: {
       type: String,
       required: true,

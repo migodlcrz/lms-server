@@ -18,6 +18,7 @@ interface Module {
 interface Course extends Document {
   courseID: string;
   courseName: string;
+  publisher: string;
   modules: Module[];
   students: { id: string }[];
 }
@@ -29,6 +30,10 @@ const courseSchema = new mongoose.Schema(
       required: true,
     },
     courseName: {
+      type: String,
+      required: true,
+    },
+    publisher: {
       type: String,
       required: true,
     },

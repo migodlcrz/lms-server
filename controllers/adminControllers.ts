@@ -78,7 +78,7 @@ export const googleLoginAdmin = async (req: Request, res: Response) => {
     const user = await Admin.findOne({ email });
 
     if (!user) {
-      res.status(400).json({ error: "No admin found." });
+      res.status(404).json({ error: "No admin found." });
       return;
     }
 

@@ -154,10 +154,6 @@ export const googleLoginUser = async (req: Request, res: Response) => {
     } catch (error) {
       res.status(400).json({ error: "Server error." });
     }
-
-    // res
-    //   .status(200)
-    //   .json({ message: "Logged in.", name: name, email: email, token: token });
   } catch (error) {
     res.status(400).json({ error: "Server error." });
   }

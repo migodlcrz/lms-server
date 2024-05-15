@@ -98,10 +98,10 @@ export const registerUser = async (req: Request, res: Response) => {
 };
 
 export const googleRegisterUser = async (req: Request, res: Response) => {
-  const { name, email, token } = req.body;
+  const { name, email } = req.body;
 
   try {
-    if (!email || !name || !token) {
+    if (!name || !email) {
       res.status(400).json({ error: "Incomplete details." });
       return;
     }
@@ -121,7 +121,7 @@ export const googleRegisterUser = async (req: Request, res: Response) => {
 
       const token = createToken(user._id, user.email);
 
-      const user_ = user.email;
+      const user_ = user;
       res.status(200).json({ message: "User created.", user_, email, token });
     } catch (error) {
       res.status(400).json({ message: "Server error." });

@@ -132,10 +132,10 @@ export const googleRegisterUser = async (req: Request, res: Response) => {
 };
 
 export const googleLoginUser = async (req: Request, res: Response) => {
-  const { name, email, token } = req.body;
+  const { email } = req.body;
 
   try {
-    if (!email || !name || !token) {
+    if (!email) {
       res.status(400).json({ error: "Incomplete details." });
       return;
     }
@@ -147,9 +147,17 @@ export const googleLoginUser = async (req: Request, res: Response) => {
       return;
     }
 
-    res
-      .status(200)
-      .json({ message: "Logged in.", name: name, email: email, token: token });
+    try {
+      const token = createToken(user._id, user.email);
+      const user_ = user;
+      res.status(200).json({ message: "Logged in.", user_, token: token });
+    } catch (error) {
+      res.status(400).json({ error: "Server error." });
+    }
+
+    // res
+    //   .status(200)
+    //   .json({ message: "Logged in.", name: name, email: email, token: token });
   } catch (error) {
     res.status(400).json({ error: "Server error." });
   }

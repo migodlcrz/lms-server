@@ -98,10 +98,10 @@ export const registerUser = async (req: Request, res: Response) => {
 };
 
 export const googleRegisterUser = async (req: Request, res: Response) => {
-  const { name, email } = req.body;
+  const { firstName, lastName, email, password } = req.body;
 
   try {
-    if (!name || !email) {
+    if (!firstName || !lastName || !email || !password) {
       res.status(400).json({ error: "Incomplete details." });
       return;
     }
@@ -114,15 +114,18 @@ export const googleRegisterUser = async (req: Request, res: Response) => {
     }
 
     try {
-      // const saltRounds = 10;
-      // const hashedPassword = await bcrypt.hash(password, saltRounds);
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-      const user = await User.create({ name, email });
-
-      const token = createToken(user._id, user.email);
+      const user = await User.create({
+        firstName,
+        lastName,
+        email,
+        password: hashedPassword,
+      });
 
       const user_ = user;
-      res.status(200).json({ message: "User created.", user_, email, token });
+      res.status(200).json({ message: "User created.", user_, email });
     } catch (error) {
       res.status(400).json({ message: "Server error." });
     }
@@ -132,10 +135,10 @@ export const googleRegisterUser = async (req: Request, res: Response) => {
 };
 
 export const googleLoginUser = async (req: Request, res: Response) => {
-  const { email } = req.body;
+  const { email, password } = req.body;
 
   try {
-    if (!email) {
+    if (!email || !password) {
       res.status(400).json({ error: "Incomplete details." });
       return;
     }
@@ -147,6 +150,15 @@ export const googleLoginUser = async (req: Request, res: Response) => {
       return;
     }
 
+    console.log(password, user.password);
+
+    const match = await bcrypt.compare(password, user.password);
+
+    if (!match) {
+      res.status(400).json({ error: "Invalid credentials." });
+      return;
+    }
+
     try {
       const token = createToken(user._id, user.email);
       const user_ = user;
@@ -155,6 +167,7 @@ export const googleLoginUser = async (req: Request, res: Response) => {
       res.status(400).json({ error: "Server error." });
     }
   } catch (error) {
+    console.log(error);
     res.status(400).json({ error: "Server error." });
   }
 };

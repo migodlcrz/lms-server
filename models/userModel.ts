@@ -1,5 +1,16 @@
 import mongoose from "mongoose";
 
+// Define the schema for a to-do item
+const todoItemSchema = new mongoose.Schema({
+  title: {
+    type: String,
+  },
+  date: {
+    type: Number,
+  },
+});
+
+// Define the user schema
 const userSchema = new mongoose.Schema(
   {
     firstName: {
@@ -23,6 +34,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    todos: [todoItemSchema],
   },
   { timestamps: true }
 );

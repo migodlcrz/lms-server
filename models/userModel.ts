@@ -6,7 +6,8 @@ const todoItemSchema = new mongoose.Schema({
     type: String,
   },
   date: {
-    type: Number,
+    type: Date,
+    // type: Number,
   },
 });
 

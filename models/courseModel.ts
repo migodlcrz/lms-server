@@ -37,20 +37,21 @@ const courseSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    price: {
+      type: Number,
+      required: true,
+    },
     modules: [
       {
         topics: [
           {
             name: {
               type: String,
-              default: "Topic - 0! Welcome",
-              required: true,
             },
-            isComplete: { type: Boolean, default: false, required: true },
+            isComplete: { type: Boolean, default: false },
             dateCreated: {
               type: Date,
               default: Date.now,
-              required: true,
             },
           },
         ],
@@ -58,14 +59,11 @@ const courseSchema = new mongoose.Schema(
           {
             name: {
               type: String,
-              default: "Quiz - 0! Welcome",
-              required: true,
             },
-            isComplete: { type: Boolean, default: false, required: true },
+            isComplete: { type: Boolean, default: false },
             dateCreated: {
               type: Date,
               default: Date.now,
-              required: true,
             },
           },
         ],
@@ -76,6 +74,9 @@ const courseSchema = new mongoose.Schema(
         id: { type: String },
       },
     ],
+    image: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

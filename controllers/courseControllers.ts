@@ -14,7 +14,7 @@ export const getCourses = async (req: Request, res: Response) => {
 
 export const createCourse = async (req: Request, res: Response) => {
   try {
-    const { courseID, courseName, publisher, modules, students } = req.body;
+    const { courseID, courseName, publisher, price } = req.body;
 
     const exist = await Course.findOne({ courseID });
 
@@ -30,8 +30,7 @@ export const createCourse = async (req: Request, res: Response) => {
       courseID,
       courseName,
       publisher,
-      modules,
-      students,
+      price,
     };
 
     const course = await Course.create(courseData);

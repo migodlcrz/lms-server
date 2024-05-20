@@ -26,6 +26,7 @@ app.use("/api/user", userRoute);
 app.use("/api/course", courseRoute);
 
 const mongoUri = process.env.MONGO_URL;
+const port = process.env.PORT || 4000;
 
 if (!mongoUri) {
   console.error(
@@ -37,9 +38,9 @@ if (!mongoUri) {
 mongoose
   .connect(mongoUri)
   .then(() => {
-    app.listen(process.env.PORT, () => {
+    app.listen(port, () => {
       console.log(
-        `Database and server is running on http://localhost:${process.env.PORT}/`
+        `Database and server is running on http://localhost:${port}/`
       );
     });
   })

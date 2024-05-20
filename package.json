@@ -25,7 +25,8 @@
     "typescript": "^5.4.5"
   },
   "scripts": {
-    "dev": "tsc && nodemon .\\dist\\server.js",
+    "build": "npm install && npx tsc && npm install nodemon",
+    "start": "tsc && nodemon .\\dist\\server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   }
 }

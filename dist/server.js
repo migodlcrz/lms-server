@@ -24,6 +24,7 @@ app.use("/api/admin", admin_1.default);
 app.use("/api/user", user_1.default);
 app.use("/api/course", course_1.default);
 const mongoUri = process.env.MONGO_URL;
+const port = process.env.PORT || 4000;
 if (!mongoUri) {
     console.error("MongoDB connection string is missing in the environment variables.");
     process.exit(1);
@@ -31,8 +32,8 @@ if (!mongoUri) {
 mongoose_1.default
     .connect(mongoUri)
     .then(() => {
-    app.listen(process.env.PORT, () => {
-        console.log(`Database and server is running on http://localhost:${process.env.PORT}/`);
+    app.listen(port, () => {
+        console.log(`Database and server is running on http://localhost:${port}/`);
     });
 })
     .catch((error) => {

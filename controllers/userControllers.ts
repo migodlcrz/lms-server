@@ -46,8 +46,7 @@ export const loginUser = async (req: Request, res: Response) => {
 
   try {
     const token = createToken(user._id, user.email);
-    const user_ = user.email;
-    const pass_ = user.password;
+    const user_ = user;
     res.status(200).json({ message: "Logged in.", user_, token: token });
   } catch (error) {
     res.status(400).json({ error: "Server error." });
@@ -55,10 +54,11 @@ export const loginUser = async (req: Request, res: Response) => {
 };
 
 export const registerUser = async (req: Request, res: Response) => {
-  const { name, email, password } = req.body;
+  const { firstName, lastName, email, password } = req.body;
+  console.log("PUMASOK");
 
-  if (!name || !email || !password) {
-    res.status(401).json({ error: "All fields must be filled." });
+  if (!firstName || !lastName || !email || !password) {
+    res.status(400).json({ error: "All fields must be filled." });
     return;
   }
 
@@ -86,14 +86,19 @@ export const registerUser = async (req: Request, res: Response) => {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    const user = await User.create({ name, email, password: hashedPassword });
+    const user = await User.create({
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword,
+    });
 
     const token = createToken(user._id, user.email);
 
-    const user_ = user.email;
+    const user_ = user;
     res.status(200).json({ message: "User created.", user_, email, token });
   } catch (error) {
-    res.status(400).json({ message: "Server error." });
+    res.status(400).json({ error: error });
   }
 };
 

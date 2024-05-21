@@ -63,7 +63,7 @@ export const registerUser = async (req: Request, res: Response) => {
   }
 
   if (!validator.isEmail(email)) {
-    res.status(400).json({ message: "Invalid email." });
+    res.status(400).json({ error: "Invalid email." });
     return;
   }
 

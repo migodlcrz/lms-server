@@ -66,7 +66,7 @@ const registerUser = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         return;
     }
     if (!validator_1.default.isEmail(email)) {
-        res.status(400).json({ message: "Invalid email." });
+        res.status(400).json({ error: "Invalid email." });
         return;
     }
     if (!validator_1.default.isStrongPassword(password)) {

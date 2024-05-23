@@ -17,8 +17,12 @@ const courseSchema = new mongoose_1.default.Schema({
         type: String,
         required: true,
     },
-    price: {
-        type: Number,
+    tier: {
+        type: String,
+        required: true,
+    },
+    description: {
+        type: String,
         required: true,
     },
     modules: [

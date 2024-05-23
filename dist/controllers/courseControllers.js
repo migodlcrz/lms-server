@@ -25,19 +25,20 @@ const getCourses = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.getCourses = getCourses;
 const createCourse = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { courseID, courseName, publisher, price } = req.body;
+        const { courseID, courseName, publisher, tier, description } = req.body;
         const exist = yield courseModel_1.default.findOne({ courseID });
         if (exist) {
             return res.status(400).json({ error: "Course code already registered." });
         }
-        if (!courseID || !courseName) {
+        if (!courseID || !courseName || !publisher || !tier || !description) {
             return res.status(400).json({ error: "Incomplete course details." });
         }
         const courseData = {
             courseID,
             courseName,
             publisher,
-            price,
+            tier,
+            description,
         };
         const course = yield courseModel_1.default.create(courseData);
         return res

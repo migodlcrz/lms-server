@@ -14,7 +14,7 @@ export const getCourses = async (req: Request, res: Response) => {
 
 export const createCourse = async (req: Request, res: Response) => {
   try {
-    const { courseID, courseName, publisher, price } = req.body;
+    const { courseID, courseName, publisher, tier, description } = req.body;
 
     const exist = await Course.findOne({ courseID });
 
@@ -22,7 +22,7 @@ export const createCourse = async (req: Request, res: Response) => {
       return res.status(400).json({ error: "Course code already registered." });
     }
 
-    if (!courseID || !courseName) {
+    if (!courseID || !courseName || !publisher || !tier || !description) {
       return res.status(400).json({ error: "Incomplete course details." });
     }
 
@@ -30,7 +30,8 @@ export const createCourse = async (req: Request, res: Response) => {
       courseID,
       courseName,
       publisher,
-      price,
+      tier,
+      description,
     };
 
     const course = await Course.create(courseData);

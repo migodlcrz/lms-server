@@ -19,6 +19,8 @@ interface Course extends Document {
   courseID: string;
   courseName: string;
   publisher: string;
+  tier: string;
+  description: string;
   modules: Module[];
   students: { id: string }[];
 }
@@ -37,8 +39,12 @@ const courseSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    price: {
-      type: Number,
+    tier: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
       required: true,
     },
     modules: [

@@ -59,3 +59,19 @@ export const deleteCourse = async (req: Request, res: Response) => {
 
   res.status(200).json({ message: "Course successfully deleted." });
 };
+
+export const editCourse = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "Invalid ID input." });
+  }
+
+  const course = await Course.findOneAndUpdate({ _id: id }, { ...req.body });
+
+  if (!course) {
+    return res.status(404).json({ error: "Card does not exist." });
+  }
+
+  res.status(200).json({ message: "Course edited." });
+};

@@ -67,11 +67,42 @@ export const editCourse = async (req: Request, res: Response) => {
     return res.status(404).json({ error: "Invalid ID input." });
   }
 
-  const course = await Course.findOneAndUpdate({ _id: id }, { ...req.body });
+  const { courseName, courseID, description } = req.body;
 
-  if (!course) {
-    return res.status(404).json({ error: "Card does not exist." });
+  console.log(courseName);
+  console.log(courseID);
+  console.log(description);
+
+  const updateObject: any = {};
+
+  if (courseName) {
+    updateObject.courseName = courseName; // Changed from coursename to courseName
   }
 
-  res.status(200).json({ message: "Course edited." });
+  if (courseID) {
+    updateObject.courseID = courseID; // Changed from courseid to courseID
+  }
+
+  if (description) {
+    updateObject.description = description; // Changed from description to description
+  }
+
+  console.log(updateObject);
+
+  try {
+    const course = await Course.findOneAndUpdate(
+      { _id: id },
+      { ...updateObject },
+      { new: true } // To return the updated document
+    );
+
+    if (!course) {
+      return res.status(404).json({ error: "Course does not exist." });
+    }
+
+    res.status(200).json({ message: "Course edited.", course });
+  } catch (error) {
+    console.error("Error editing course:", error);
+    res.status(500).json({ error: "Internal server error." });
+  }
 };

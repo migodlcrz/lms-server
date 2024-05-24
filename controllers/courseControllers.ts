@@ -67,24 +67,28 @@ export const editCourse = async (req: Request, res: Response) => {
     return res.status(404).json({ error: "Invalid ID input." });
   }
 
-  const { courseName, courseID, description } = req.body;
-
-  console.log(courseName);
-  console.log(courseID);
-  console.log(description);
+  const { courseName, courseID, description, tier, isPublished } = req.body;
 
   const updateObject: any = {};
 
   if (courseName) {
-    updateObject.courseName = courseName; // Changed from coursename to courseName
+    updateObject.courseName = courseName;
   }
 
   if (courseID) {
-    updateObject.courseID = courseID; // Changed from courseid to courseID
+    updateObject.courseID = courseID;
   }
 
   if (description) {
-    updateObject.description = description; // Changed from description to description
+    updateObject.description = description;
+  }
+
+  if (tier) {
+    updateObject.tier = tier;
+  }
+
+  if (isPublished) {
+    updateObject.isPublished = isPublished;
   }
 
   console.log(updateObject);
@@ -93,7 +97,7 @@ export const editCourse = async (req: Request, res: Response) => {
     const course = await Course.findOneAndUpdate(
       { _id: id },
       { ...updateObject },
-      { new: true } // To return the updated document
+      { new: true }
     );
 
     if (!course) {

@@ -21,6 +21,7 @@ interface Course extends Document {
   publisher: string;
   tier: string;
   description: string;
+  isPublished: boolean;
   modules: Module[];
   students: { id: string }[];
 }
@@ -46,6 +47,11 @@ const courseSchema = new mongoose.Schema(
     description: {
       type: String,
       required: true,
+    },
+    isPublished: {
+      type: Boolean,
+      required: true,
+      default: false,
     },
     modules: [
       {

@@ -4,11 +4,14 @@ import {
   createCourse,
   deleteCourse,
   editCourse,
+  getCourse,
 } from "../controllers/courseControllers";
 
 const course = express.Router();
 
 course.get("/", getCourses);
+
+course.get("/:id", getCourse);
 
 course.post("/create", createCourse);
 

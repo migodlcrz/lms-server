@@ -12,6 +12,24 @@ export const getCourses = async (req: Request, res: Response) => {
   res.status(200).json(courses);
 };
 
+export const getCourse = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "Course not found." });
+  }
+
+  console.log("HELLO");
+
+  const courses = await Course.findById(id).sort({ createdAt: -1 });
+
+  if (!courses) {
+    res.status(404).json({ error: "No courses exist." });
+  }
+
+  res.status(200).json(courses);
+};
+
 export const createCourse = async (req: Request, res: Response) => {
   try {
     const { courseID, courseName, publisher, tier, description } = req.body;

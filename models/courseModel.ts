@@ -23,7 +23,7 @@ interface Course extends Document {
   description: string;
   isPublished: boolean;
   modules: Module[];
-  students: { id: string }[];
+  students: string[];
 }
 
 const courseSchema = new mongoose.Schema(
@@ -81,11 +81,9 @@ const courseSchema = new mongoose.Schema(
         ],
       },
     ],
-    students: [
-      {
-        id: { type: String },
-      },
-    ],
+    students: {
+      type: [String],
+    },
     image: {
       type: String,
     },

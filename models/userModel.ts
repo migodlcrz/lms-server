@@ -11,6 +11,8 @@ const todoItemSchema = new mongoose.Schema({
   },
 });
 
+const CourseIdSchema = new mongoose.Schema({});
+
 // Define the user schema
 const userSchema = new mongoose.Schema(
   {
@@ -34,6 +36,9 @@ const userSchema = new mongoose.Schema(
     image: {
       type: String,
       default: "",
+    },
+    courses: {
+      type: [String],
     },
     todos: [todoItemSchema],
   },

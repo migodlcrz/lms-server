@@ -19,7 +19,7 @@ import {
 
 import { deleteUser } from "../controllers/userController/delete";
 
-import { enrollUser } from "../controllers/userController/enroll";
+import { enrollUser, unEnrollUser } from "../controllers/userController/enroll";
 
 const user = express.Router();
 
@@ -39,5 +39,6 @@ user.post("/todo/add/:id", addToDoList);
 user.delete("/:id/todo/delete/:todoId", deleteToDoList);
 
 user.post("/enroll/:userId/:courseId", enrollUser);
+user.post("/unenroll/:userId/:courseId", unEnrollUser);
 
 export default user;

@@ -1,11 +1,9 @@
 import express from "express";
-import {
-  getCourses,
-  createCourse,
-  deleteCourse,
-  editCourse,
-  getCourse,
-} from "../controllers/courseControllers";
+
+import { getCourse, getCourses } from "../controllers/courseController/get";
+import { createCourse } from "../controllers/courseController/create";
+import { deleteCourse } from "../controllers/courseController/delete";
+import { editCourse } from "../controllers/courseController/update";
 
 const course = express.Router();
 

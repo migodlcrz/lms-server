@@ -19,7 +19,11 @@ import {
 
 import { deleteUser } from "../controllers/userController/delete";
 
-import { enrollUser, unEnrollUser } from "../controllers/userController/enroll";
+import {
+  enrollUser,
+  isUserEnrolled,
+  unEnrollUser,
+} from "../controllers/userController/enroll";
 
 const user = express.Router();
 
@@ -40,5 +44,6 @@ user.delete("/:id/todo/delete/:todoId", deleteToDoList);
 
 user.post("/enroll/:userId/:courseId", enrollUser);
 user.post("/unenroll/:userId/:courseId", unEnrollUser);
+user.get("/checkEnrollStatus/:userId/:courseId", isUserEnrolled);
 
 export default user;

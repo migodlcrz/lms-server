@@ -68,3 +68,32 @@ export const unEnrollUser = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal server error." });
   }
 };
+
+export const isUserEnrolled = async (req: Request, res: Response) => {
+  const { courseId, userId } = req.params;
+
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const isEnrolled = user.courses.includes(courseId);
+
+    if (isEnrolled) {
+      return res
+        .status(200)
+        .json({ message: "User is enrolled in the course.", status: true });
+    } else {
+      return res
+        .status(200)
+        .json({
+          message: "User is not enrolled in the course.",
+          status: false,
+        });
+    }
+  } catch (error) {
+    return res.status(500).json({ error: "Internal server error." });
+  }
+};

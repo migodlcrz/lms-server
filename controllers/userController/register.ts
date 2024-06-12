@@ -4,6 +4,7 @@ import validator from "validator";
 import bcrypt from "bcrypt";
 import mongoose from "mongoose";
 import jwt, { Secret } from "jsonwebtoken";
+import { stripe } from "../../lib/stripe";
 
 const createToken = (_id: string, email: string) => {
   const secretOrPrivateKey: Secret = process.env.SECRET || "";
@@ -14,7 +15,6 @@ const createToken = (_id: string, email: string) => {
 
 export const registerUser = async (req: Request, res: Response) => {
   const { firstName, lastName, email, password } = req.body;
-  console.log("PUMASOK");
 
   if (!firstName || !lastName || !email || !password) {
     res.status(400).json({ error: "All fields must be filled." });
@@ -45,17 +45,33 @@ export const registerUser = async (req: Request, res: Response) => {
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
+    const customer = await stripe.customers.create(
+      {
+        email,
+      },
+      {
+        apiKey: process.env.STRIPE_SECRET_KEY,
+      }
+    );
+
     const user = await User.create({
       firstName,
       lastName,
       email,
       password: hashedPassword,
+      stripeCustomerId: customer.id,
     });
 
     const token = createToken(user._id, user.email);
 
     const user_ = user;
-    res.status(200).json({ message: "User created.", user_, email, token });
+    res.status(200).json({
+      message: "User created.",
+      user_,
+      email,
+      token,
+      stripeCustomerId: customer.id,
+    });
   } catch (error) {
     res.status(400).json({ error: error });
   }
@@ -81,11 +97,21 @@ export const googleRegisterUser = async (req: Request, res: Response) => {
       const saltRounds = 10;
       const hashedPassword = await bcrypt.hash(password, saltRounds);
 
+      const customer = await stripe.customers.create(
+        {
+          email,
+        },
+        {
+          apiKey: process.env.STRIPE_SECRET_KEY,
+        }
+      );
+
       const user = await User.create({
         firstName,
         lastName,
         email,
         password: hashedPassword,
+        stripeCustomerId: customer.id,
       });
 
       const user_ = user;

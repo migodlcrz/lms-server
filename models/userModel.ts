@@ -33,9 +33,19 @@ const userSchema = new mongoose.Schema(
       type: String,
       unique: true,
     },
+    stripeCustomerId: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     image: {
       type: String,
       default: "",
+    },
+    tier: {
+      type: String,
+      required: true,
+      default: "free",
     },
     courses: {
       type: [String],

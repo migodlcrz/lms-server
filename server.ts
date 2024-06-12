@@ -9,6 +9,7 @@ import helmet from "helmet";
 import adminRoute from "./routes/admin";
 import userRoute from "./routes/user";
 import courseRoute from "./routes/course";
+import subscriptionRoute from "./routes/subscription";
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use((req, res, next) => {
 app.use("/api/admin", adminRoute);
 app.use("/api/user", userRoute);
 app.use("/api/course", courseRoute);
+app.use("/api/subs", subscriptionRoute);
 
 const mongoUri = process.env.MONGO_URL;
 const port = process.env.PORT || 4000;

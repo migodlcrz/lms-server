@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { stripe } from "../../lib/stripe";
 import User from "../../models/userModel";
+import Course from "../../models/courseModel";
 
 export const createSession = async (req: Request, res: Response) => {
   try {

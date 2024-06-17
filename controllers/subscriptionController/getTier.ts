@@ -20,9 +20,23 @@ export const getTier = async (req: Request, res: Response) => {
       }
     );
 
-    if (latestPayment.data[0].amount / 100 === 10) {
+    const amount = latestPayment.data[0].amount / 100;
+
+    if (!latestPayment.data || latestPayment.data.length === 0) {
+      user.tier = "Free";
+      await user.save();
+      return res.json({ tier: "Free" });
+    }
+
+    if (amount === 10) {
+      user.tier = "Basic";
+      await user.save();
       return res.json({ tier: "Basic" });
-    } else if (latestPayment.data[0].amount / 100 === 20) {
+    }
+
+    if (amount === 20) {
+      user.tier = "Premium";
+      await user.save();
       return res.json({ tier: "Premium" });
     }
 

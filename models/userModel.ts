@@ -44,7 +44,7 @@ const userSchema = new mongoose.Schema(
     tier: {
       type: String,
       required: true,
-      default: "free",
+      default: "Free",
     },
     courses: {
       type: [String],

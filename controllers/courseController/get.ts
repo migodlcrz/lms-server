@@ -3,13 +3,18 @@ import { Request, Response } from "express";
 import Course from "../../models/courseModel";
 
 export const getCourses = async (req: Request, res: Response) => {
-  const courses = await Course.find({}).sort({ createdAt: -1 });
+  try {
+    const courses = await Course.find({}).sort({ createdAt: -1 });
 
-  if (!courses) {
-    res.status(404).json({ error: "No courses exist." });
+    if (!courses || courses.length === 0) {
+      return res.status(404).json({ error: "No courses exist." });
+    }
+
+    res.status(200).json(courses);
+  } catch (error) {
+    console.error("Error fetching courses:", error);
+    res.status(500).json({ error: "Failed to fetch courses." });
   }
-
-  res.status(200).json(courses);
 };
 
 export const getCourse = async (req: Request, res: Response) => {
@@ -19,11 +24,16 @@ export const getCourse = async (req: Request, res: Response) => {
     return res.status(404).json({ error: "Course not found." });
   }
 
-  const courses = await Course.findById(id).sort({ createdAt: -1 });
+  try {
+    const course = await Course.findById(id);
 
-  if (!courses) {
-    res.status(404).json({ error: "No courses exist." });
+    if (!course) {
+      return res.status(404).json({ error: "Course not found." });
+    }
+
+    res.status(200).json(course);
+  } catch (error) {
+    console.error("Error fetching course:", error);
+    res.status(500).json({ error: "Failed to fetch course." });
   }
-
-  res.status(200).json(courses);
 };

@@ -21,8 +21,6 @@ export const getTier = async (req: Request, res: Response) => {
       }
     );
 
-    res.json(latestPayment.data[0]);
-
     const amount = latestPayment.data[0].amount / 100;
 
     // Fetch tier prices from MongoDB
@@ -44,7 +42,7 @@ export const getTier = async (req: Request, res: Response) => {
 
     res.json({ tier: userTier });
   } catch (error) {
-    console.error("Error updating price:", error);
+    console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }
 };

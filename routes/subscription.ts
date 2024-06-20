@@ -2,7 +2,7 @@ import { getSubscription } from "../controllers/subscriptionController/get";
 import { createSession } from "../controllers/subscriptionController/createSession";
 import { getTier } from "../controllers/subscriptionController/getTier";
 import { createSubscription } from "../controllers/subscriptionController/create";
-// import { updateSubscription } from "../controllers/subscriptionController/update";
+import { updateSubscription } from "../controllers/subscriptionController/update";
 import User from "../models/userModel";
 import express from "express";
 
@@ -16,6 +16,6 @@ subscription.post("/session", createSession);
 
 subscription.post("/create", createSubscription);
 
-// subscription.post("/update", updateSubscription);
+subscription.post("/update/:productId", updateSubscription);
 
 export default subscription;

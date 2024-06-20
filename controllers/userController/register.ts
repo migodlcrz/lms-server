@@ -59,6 +59,7 @@ export const registerUser = async (req: Request, res: Response) => {
       lastName,
       email,
       password: hashedPassword,
+      tier: "Free",
       stripeCustomerId: customer.id,
     });
 

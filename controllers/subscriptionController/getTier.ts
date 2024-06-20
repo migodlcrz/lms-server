@@ -20,27 +20,8 @@ export const getTier = async (req: Request, res: Response) => {
       }
     );
 
-    const amount = latestPayment.data[0].amount / 100;
-
-    if (!latestPayment.data || latestPayment.data.length === 0) {
-      user.tier = "Free";
-      await user.save();
-      return res.json({ tier: "Free" });
-    }
-
-    if (amount === 10) {
-      user.tier = "Basic";
-      await user.save();
-      return res.json({ tier: "Basic" });
-    }
-
-    if (amount === 20) {
-      user.tier = "Premium";
-      await user.save();
-      return res.json({ tier: "Premium" });
-    }
-
-    res.json({ message: "None" });
+    console.log(latestPayment.data[0].id);
+    res.json(latestPayment.data[0].id);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });

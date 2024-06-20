@@ -20,8 +20,7 @@ export const getTier = async (req: Request, res: Response) => {
       }
     );
 
-    console.log(latestPayment.data[0].id);
-    res.json(latestPayment.data[0].id);
+    res.json(latestPayment.data[0]);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });

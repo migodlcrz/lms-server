@@ -24,6 +24,8 @@ export const createSession = async (req: Request, res: Response) => {
       return res.status(400).json({ error: "Invalid priceId" });
     }
 
+    const port = process.env.REDIRECT_URL;
+
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
       payment_method_types: ["card"],
@@ -33,8 +35,8 @@ export const createSession = async (req: Request, res: Response) => {
           quantity: 1,
         },
       ],
-      success_url: "http://localhost:3002/pricing",
-      cancel_url: "http://localhost:3002/pricing",
+      success_url: `${port}/success`,
+      cancel_url: `${port}/pricing`,
       customer: user.stripeCustomerId,
     });
 

@@ -21,10 +21,13 @@ export const getTier = async (req: Request, res: Response) => {
       }
     );
 
-    const amount = latestPayment.data[0].amount / 100;
+    const amount = latestPayment.data[0].amount;
 
     // Fetch tier prices from MongoDB
     const tiers = await Tier.find(); // Retrieve all tiers from MongoDB
+
+    // console.log("AMOUNT: ", amount);
+    // console.log("TIERS: ", tiers);
 
     let userTier = "Free"; // Default tier if no matching price is found
 

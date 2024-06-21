@@ -42,7 +42,7 @@ export const updateSubscription = async (req: Request, res: Response) => {
     await tier.save(); // Save the updated tier document
 
     // Send the new price details and updated tier as the response
-    res.status(200).json({ newPrice, tier });
+    res.status(200).json({ newPrice, tier, message: "Edited successfully." });
   } catch (error) {
     console.error("Error updating price:", error);
     res.status(500).json({ error: error });

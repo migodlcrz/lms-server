@@ -10,6 +10,7 @@ import adminRoute from "./routes/admin";
 import userRoute from "./routes/user";
 import courseRoute from "./routes/course";
 import subscriptionRoute from "./routes/subscription";
+import moduleRoute from "./routes/module";
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use("/api/admin", adminRoute);
 app.use("/api/user", userRoute);
 app.use("/api/course", courseRoute);
 app.use("/api/subs", subscriptionRoute);
+app.use("/api/module", moduleRoute);
 
 const mongoUri = process.env.MONGO_URL;
 const port = process.env.PORT || 4000;

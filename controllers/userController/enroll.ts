@@ -55,11 +55,9 @@ export const unEnrollUser = async (req: Request, res: Response) => {
         .json({ error: "User is not enrolled in this course." });
     }
 
-    // Remove userId from course's students array
     course.students = course.students.filter((id: string) => id !== userId);
     await course.save();
 
-    // Remove courseId from user's courses array
     user.courses = user.courses.filter((id: string) => id !== courseId);
     await user.save();
 
@@ -86,12 +84,10 @@ export const isUserEnrolled = async (req: Request, res: Response) => {
         .status(200)
         .json({ message: "User is enrolled in the course.", status: true });
     } else {
-      return res
-        .status(200)
-        .json({
-          message: "User is not enrolled in the course.",
-          status: false,
-        });
+      return res.status(200).json({
+        message: "User is not enrolled in the course.",
+        status: false,
+      });
     }
   } catch (error) {
     return res.status(500).json({ error: "Internal server error." });

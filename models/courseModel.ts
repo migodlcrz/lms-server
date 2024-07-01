@@ -53,34 +53,9 @@ const courseSchema = new mongoose.Schema(
       required: true,
       default: false,
     },
-    modules: [
-      {
-        topics: [
-          {
-            name: {
-              type: String,
-            },
-            isComplete: { type: Boolean, default: false },
-            dateCreated: {
-              type: Date,
-              default: Date.now,
-            },
-          },
-        ],
-        quiz: [
-          {
-            name: {
-              type: String,
-            },
-            isComplete: { type: Boolean, default: false },
-            dateCreated: {
-              type: Date,
-              default: Date.now,
-            },
-          },
-        ],
-      },
-    ],
+    modules: {
+      type: [String],
+    },
     students: {
       type: [String],
     },

@@ -27,6 +27,8 @@ app.use("/api/admin", adminRoute);
 app.use("/api/user", userRoute);
 app.use("/api/course", courseRoute);
 app.use("/api/subs", subscriptionRoute);
+
+app.use(express.urlencoded({ extended: true }));
 app.use("/api/module", moduleRoute);
 
 const mongoUri = process.env.MONGO_URL;

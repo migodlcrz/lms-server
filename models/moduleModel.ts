@@ -7,6 +7,9 @@ const moduleSchema = new mongoose.Schema({
   description: {
     type: String,
   },
+  lessons: {
+    type: [String],
+  },
 });
 
 const Module = mongoose.models.module || mongoose.model("module", moduleSchema);
